@@ -1,33 +1,29 @@
 import { base_url } from "../../constants/constants";
-import { basketActions } from "../../redux";
+import { basketActions } from "../../redux/basketSlice";
 import css from "./PizzaCard.module.css";
-import {useDispatch} from "react-redux"
+import { useDispatch } from "react-redux";
 
-function PizzaCard({
-  addToBasket,
-  title,
-  description,
-  price,
-  img,
-  id,
-  isAdmin,
-  link,
-}) {
-  const handleClick = () => addToBasket({ title, description, price, img, id });
-
-  const dispatch = useDispatch()
+function PizzaCard({ title, description, price, img, id, isAdmin, link }) {
+  const dispatch = useDispatch();
   const handleReduxClick = () => {
-    dispatch( basketActions.addToBasket() )
-  } 
+    const add = basketActions.addToBasket({
+      title,
+      description,
+      price,
+      img,
+      id,
+    });
+    console.log(add);
+    dispatch(add);
+  };
   const handleDelete = () => {
     fetch(`${base_url}${link}/${id}`, {
-      method: "DELETE"
-    })
-    .then(() => {
-      alert("Successfuly deleted")
-      window.location.reload()
-    })
-  }
+      method: "DELETE",
+    }).then(() => {
+      alert("Successfuly deleted");
+      window.location.reload();
+    });
+  };
 
   return (
     <div className={css.wrapper}>
@@ -52,7 +48,9 @@ function PizzaCard({
       </div>
       {isAdmin && (
         <div>
-          <button onClick={handleDelete} className="btn">Delete</button>
+          <button onClick={handleDelete} className="btn">
+            Delete
+          </button>
           <button className="btn">Change</button>
         </div>
       )}

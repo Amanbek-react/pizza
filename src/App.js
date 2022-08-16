@@ -8,26 +8,9 @@ import AdminPage from "./pages/AdminPage/AdminPage";
 import CreateNewElement from "./pages/CreateNewElement/CreateNewElement";
 import { base_url } from "./constants/constants";
 
-const local = JSON.parse(localStorage.getItem("basket"));
 function App() {
   const [pizzas, setPizzas] = useState([]);
   const [drinks, setDrinks] = useState([]);
-  const [basket, setBasket] = useState(local || []);
-
-
-  useEffect(() => {
-    localStorage.setItem("basket", JSON.stringify(basket));
-  }, [basket]);
-
-  const addToBasket = (pizza) => {
-    // write code here
-    const isExist = basket.find((item) => item.id === pizza.id);
-
-    if (!isExist) {
-      setBasket([...basket, pizza]);
-    }
-  };
-
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -50,14 +33,13 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <Navbar basket={basket} />
+      <Navbar />
 
       <Routes>
         <Route
           path="/"
           element={
             <HomePage
-              addToBasket={addToBasket}
               drinks={drinks}
               pizzas={pizzas}
             />

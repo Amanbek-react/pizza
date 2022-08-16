@@ -37,7 +37,7 @@ const sliderCards = [
   },
 ];
 
-function HomePage({ addToBasket, drinks, pizzas }) {
+function HomePage({ drinks, pizzas }) {
   const settings = {
     dots: false,
     speed: 500,
@@ -62,7 +62,6 @@ function HomePage({ addToBasket, drinks, pizzas }) {
             title={pizza.title}
             description={pizza.description}
             price={pizza.price}
-            addToBasket={addToBasket}
           />
         ))}
       </div>
