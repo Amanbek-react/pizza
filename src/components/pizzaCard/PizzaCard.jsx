@@ -6,15 +6,15 @@ import { useDispatch } from "react-redux";
 function PizzaCard({ title, description, price, img, id, isAdmin, link }) {
   const dispatch = useDispatch();
   const handleReduxClick = () => {
-    const add = basketActions.addToBasket({
-      title,
-      description,
-      price,
-      img,
-      id,
-    });
-    console.log(add);
-    dispatch(add);
+    dispatch(
+      basketActions.addToBasket({
+        title,
+        description,
+        price,
+        img,
+        id,
+      })
+    );
   };
   const handleDelete = () => {
     fetch(`${base_url}${link}/${id}`, {

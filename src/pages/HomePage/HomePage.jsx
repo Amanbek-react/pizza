@@ -1,6 +1,7 @@
 import Slider from "react-slick";
 import PizzaCard from "../../components/pizzaCard/PizzaCard";
 import SliderCard from "../../components/sliderCard/SliderCard";
+import { useSelector } from "react-redux";
 
 const sliderCards = [
   {
@@ -37,7 +38,8 @@ const sliderCards = [
   },
 ];
 
-function HomePage({ drinks, pizzas }) {
+function HomePage({ drinks }) {
+  const pizzas = useSelector( (state) => state.pizzas.data )
   const settings = {
     dots: false,
     speed: 500,

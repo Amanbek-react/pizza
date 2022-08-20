@@ -1,21 +1,9 @@
 import { configureStore, createSlice, combineReducers } from "@reduxjs/toolkit";
 import { basketReducer } from "./basketSlice";
-
-const pizzasSlice = createSlice({
-  name: "pizzas",
-  initialState: {
-    data: [],
-  },
-  reducers: {
-    addPizzas: (state) => {
-      console.log(state);
-    },
-  },
-});
-
+import { pizzasReducer } from "./pizzasSlice";
 
 const reducers = combineReducers({
-    pizzas: pizzasSlice.reducer,
+    pizzas: pizzasReducer,
     basket: basketReducer,
 });
 
@@ -24,22 +12,8 @@ export const store = configureStore({
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-window.store = store;
-
-console.log(store);
-console.log(store.getState());
+store.subscribe(() => {
+  const redux = store.getState();
+  console.log(redux);
+  localStorage.setItem("basket", JSON.stringify(redux.basket.data))
+});
