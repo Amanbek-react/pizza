@@ -38,8 +38,9 @@ const sliderCards = [
   },
 ];
 
-function HomePage({ drinks }) {
+function HomePage() {
   const pizzas = useSelector( (state) => state.pizzas.data )
+  const drinks = useSelector( (state) => state.drinks.data ) 
   const settings = {
     dots: false,
     speed: 500,

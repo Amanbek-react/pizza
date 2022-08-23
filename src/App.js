@@ -7,11 +7,13 @@ import { useEffect, useState } from "react";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import CreateNewElement from "./pages/CreateNewElement/CreateNewElement";
 import { base_url } from "./constants/constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { pizzasActions } from "./redux/pizzasSlice";
+import { drinksActions } from "./redux/drinksSlice";
+import { testActions } from "./redux/testSllice";
 
 function App() {
-  const [drinks, setDrinks] = useState([]);
+  const {name, surname} = useSelector((state) => state.test)
   const [isLoading, setLoading] = useState(true);
 
   const dispatch = useDispatch();
@@ -22,7 +24,7 @@ function App() {
         Promise.all(res.map((item) => item.json())).then((data) => {
           setLoading(false);
           dispatch(pizzasActions.addPizzas(data[0]));
-          setDrinks(data[1]);
+          dispatch( drinksActions.addDrinks(data[1]) )
         });
       }
     );
@@ -35,10 +37,15 @@ function App() {
     <div className="App">
       <Header />
       <Navbar />
-
+      <div className="test">
+        <input onChange={(e) => {
+          dispatch( testActions.setName(e.target.value) )
+        }} value={name} type="text" placeholder="Name" />
+        <input type="text" placeholder="Surname" />
+      </div>
       <Routes>
-        <Route path="/" element={<HomePage drinks={drinks} />} />
-        <Route path="/admin" element={<AdminPage drinks={drinks} />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/admin" element={<AdminPage/>} />
         <Route path="/create-new-item" element={<CreateNewElement />} />
       </Routes>
     </div>

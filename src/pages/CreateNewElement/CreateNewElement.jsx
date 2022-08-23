@@ -17,7 +17,7 @@ function CreateNewElement() {
 
   const submit = (e) => {
     e.preventDefault();
-    setSending(true)
+    setSending(true);
     const data = {
       title,
       price,
@@ -29,23 +29,23 @@ function CreateNewElement() {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     })
-    .finally(() => {
-        setSending(false)
-    })
-    .then(()=> {
-      // TODO: Автоматически должны перенапрвляться на страницу админа
-      navigate("/admin")
-    })
+      .finally(() => {
+        setSending(false);
+      })
+      .then(() => {
+        // TODO: Автоматически должны перенапрвляться на страницу админа
+        navigate("/admin");
+      });
   };
   return (
     <div className="container page">
       <h1 className="text-center">Create new Element</h1>
       <form onSubmit={submit} className={css.formWrapper}>
         <input
-        required
+          required
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           type="text"
@@ -88,7 +88,9 @@ function CreateNewElement() {
           />
           <span>Drink</span>
         </label>
-        <button disabled={isSending} className="btn">Create</button>
+        <button disabled={isSending} className="btn">
+          Create
+        </button>
       </form>
     </div>
   );
