@@ -6,43 +6,27 @@ import HomePage from "./pages/HomePage/HomePage";
 import { useEffect, useState } from "react";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import CreateNewElement from "./pages/CreateNewElement/CreateNewElement";
-import { base_url } from "./constants/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { pizzasActions } from "./redux/pizzasSlice";
-import { drinksActions } from "./redux/drinksSlice";
-import { testActions } from "./redux/testSllice";
+import { getAllPizzas } from "./redux/pizzasSlice";
+import { getAllDrinks } from "./redux/drinksSlice";
 
 function App() {
-  const {name, surname} = useSelector((state) => state.test)
-  const [isLoading, setLoading] = useState(true);
-
   const dispatch = useDispatch();
+  const isPizzasLoading = useSelector((state) => state.pizzas.isLoading)
+  const isDrinksLoading = useSelector((state) => state.drinks.isLoading)
 
   useEffect(() => {
-    Promise.all([fetch(base_url + "pizza"), fetch(base_url + "drinks")]).then(
-      (res) => {
-        Promise.all(res.map((item) => item.json())).then((data) => {
-          setLoading(false);
-          dispatch(pizzasActions.addPizzas(data[0]));
-          dispatch( drinksActions.addDrinks(data[1]) )
-        });
-      }
-    );
+    dispatch(getAllPizzas())
+    dispatch(getAllDrinks())
   }, []);
 
-  if (isLoading) {
+  if (isDrinksLoading || isPizzasLoading) {
     return <h1>...Loading</h1>;
   }
   return (
     <div className="App">
       <Header />
       <Navbar />
-      <div className="test">
-        <input onChange={(e) => {
-          dispatch( testActions.setName(e.target.value) )
-        }} value={name} type="text" placeholder="Name" />
-        <input type="text" placeholder="Surname" />
-      </div>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/admin" element={<AdminPage/>} />
