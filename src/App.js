@@ -18,7 +18,7 @@ function App() {
   useEffect(() => {
     dispatch(getAllPizzas())
     dispatch(getAllDrinks())
-  }, []);
+  }, ["Hello"]);
 
   if (isDrinksLoading || isPizzasLoading) {
     return <h1>...Loading</h1>;
