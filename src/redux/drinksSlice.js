@@ -1,12 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { base_url } from "../constants/constants";
+import Api from "../api/Api";
 
 export const getAllDrinks = createAsyncThunk(
   "drinks/GET_ALL_DRINKS",
   async () => {
-    const res = await fetch(base_url + "drinks");
-    const data = await res.json();
-    return data;
+    const res = await Api.getDrinks()
+    return res.data;
   }
 );
 
