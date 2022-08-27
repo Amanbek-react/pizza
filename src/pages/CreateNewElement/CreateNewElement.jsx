@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { base_url } from "../../constants/constants";
+import Api from "../../api/Api";
 import css from "./CreateNewElement.module.css";
 
 function CreateNewElement() {
@@ -24,19 +24,11 @@ function CreateNewElement() {
       description,
       img: image,
     };
-
-    fetch(base_url + status, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    Api.create(status, data)
       .finally(() => {
         setSending(false);
       })
       .then(() => {
-        // TODO: Автоматически должны перенапрвляться на страницу админа
         navigate("/admin");
       });
   };

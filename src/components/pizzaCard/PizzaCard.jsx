@@ -1,7 +1,7 @@
-import { base_url } from "../../constants/constants";
 import { basketActions } from "../../redux/basketSlice";
 import css from "./PizzaCard.module.css";
 import { useDispatch } from "react-redux";
+import Api from "../../api/Api";
 
 function PizzaCard({ title, description, price, img, id, isAdmin, link }) {
   const dispatch = useDispatch();
@@ -17,12 +17,15 @@ function PizzaCard({ title, description, price, img, id, isAdmin, link }) {
     );
   };
   const handleDelete = () => {
-    fetch(`${base_url}${link}/${id}`, {
-      method: "DELETE",
-    }).then(() => {
-      alert("Successfuly deleted");
-      window.location.reload();
-    });
+    if (link === "pizza") {
+      Api.deletePizza(id).then(() => {
+        window.location.reload();
+      });
+    } else {
+      Api.deleteDrink(id).then(() => {
+        window.location.reload();
+      });
+    }
   };
 
   return (
